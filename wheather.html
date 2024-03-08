@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather forecast</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .body{
+            color: black;
+            font-family: cursive;
+            width: 100%;
+            height: 100vh;
+            background-image: url(https://complicated.netlify.app/static/media/w1.744eff3718d8ea3d3239.jpg);
+            background-size: cover;
+            background-position: center;
+            animation-name: bychange;
+            animation-iteration-count: infinite;
+            animation-duration: 200s;
+            /* animation-play-state: running; */
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: space-evenly;
+        }
+        .inner{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: space-evenly;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.105);
+            backdrop-filter: blur(7px);
+        }
+        button{
+            width: 100px;
+            height: 40px;
+            border-radius: 7px;
+            background-color: rgba(255, 255, 255, 0.486);
+            color: black;
+            font-family: cursive;
+            border: 0;
+        }
+        @keyframes bychange{
+            0%{
+                background-image: url(https://complicated.netlify.app/static/media/w1.744eff3718d8ea3d3239.jpg);
+            }
+            12.5%{
+                background-image: url(https://complicated.netlify.app/static/media/w2.c6e8b2707c8601174046.webp);
+            }
+            25%{
+                background-image: url(https://complicated.netlify.app/static/media/w4.6a34174bb412aa18b8e6.jpg);
+            }
+            37.5%{
+                background-image: url(https://complicated.netlify.app/static/media/w5.a80dbf425bd25e17051e.jpg);
+            }
+            50%{
+                background-image: url(https://complicated.netlify.app/static/media/w6.14047fc291e0d9783879.jpg);
+            }
+            57.5%{
+                background-image: url(https://complicated.netlify.app/static/media/w10.fbe36db9be099bed6d74.webp);
+            }
+            70%{
+                background-image: url(https://complicated.netlify.app/static/media/w11.51dcc1c61911571ec0f7.jpg);
+            }
+            82.5%{
+                background-image: url(https://complicated.netlify.app/static/media/w12.df54e01fe740b5061397.jpg);
+            }
+            95%{
+                background-image: url(https://complicated.netlify.app/static/media/w13.8a03b14147f028ae2b7e.jpg);
+            }
+        }
+        #h1{
+            font-size: 40px;
+            width: 190px;
+            border: 0;
+            background-color: transparent;
+            font-family: cursive;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="body" id="body">
+        <div class="inner">
+    <h2 id="h2"></h2>
+    <h3 id="h3"></h3>
+    <input type="text" name="" id="h1">
+    <button onclick="unleash()">check weather</button>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    let body=document.getElementById('body')
+    let h2 = document.getElementById('h2')
+    let h3 = document.getElementById('h3')
+    let h1 = document.getElementById('h1')
+    let key = '0043cf1b15c54ccaf34db5d4f511eca6'
+    function unleash() {
+        let prompt_value = prompt('select region', 'region')
+        
+        
+        // check()
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${prompt_value}&appid=${key}`).then((result) => result.json()).then((data) => {
+            console.log(data)
+            // data.london.forEach((el) => {
+            //     h2.innerHTML = `${el.main.temp}`
+            // });
+            function check() {
+                
+            if (data.name == undefined) {
+            h2.innerHTML=`unknown°C`
+            h3.innerHTML=`nill`
+            h1.value=`${prompt_value} not found in any region`
+            }else{
+            h2.innerHTML=`${(data.main.temp-273.15).toFixed(1) }°C`
+            h3.innerHTML=`${data.weather[0].description}`
+            h1.value=`  ${data.name}`
+            
+            }
+            }
+            check()
+        })
+    }
+</script>
